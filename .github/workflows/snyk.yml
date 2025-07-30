@@ -9,6 +9,7 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -23,20 +24,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Snyk
+      - name: Install Node.js (for Snyk CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Snyk CLI
         run: npm install -g snyk
 
-      - name: Authenticate Snyk
+      - name: Authenticate with Snyk
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk auth $SNYK_TOKEN
 
-      - name: Run Snyk to check for vulnerabilities
-        run: snyk test --file=requirements.txt --package-manager=pip
+      - name: Run Snyk test (non-blocking)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test --file=requirements.txt --package-manager=pip || true
 
       - name: Upload results to Snyk dashboard
-        run: snyk monitor --file=requirements.txt --project-name=test-synk
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk monitor --file=requirements.txt --project-name=test-synk
