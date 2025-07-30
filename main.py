@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score
 
 mlflow.set_experiment("snyk_demo_experiment")
 
+
 def train():
     iris = load_iris()
     X_train, X_test, y_train, y_test = train_test_split(
