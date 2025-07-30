@@ -33,3 +33,10 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         run: snyk test --file=requirements.txt --package-manager=pip
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Upload results to Snyk dashboard
+        run: snyk monitor --file=requirements.txt --project-name=test-synk
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
