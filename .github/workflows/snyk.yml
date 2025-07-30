@@ -52,3 +52,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk monitor --file=requirements.txt --project-name=test-synk
+
