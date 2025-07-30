@@ -19,10 +19,16 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: Show Python version
+        run: python -V
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Show installed packages (pip freeze)
+        run: pip freeze
 
       - name: Install Node.js (for Snyk CLI)
         uses: actions/setup-node@v3
