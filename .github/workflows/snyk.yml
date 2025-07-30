@@ -51,5 +51,4 @@ jobs:
       - name: Upload results to Snyk dashboard
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk monitor --file=requirements.txt --project-name=test-synk
-
+        run: snyk monitor --file=requirements.txt --package-manager=pip --command=python3.9 --project-name=test-synk
